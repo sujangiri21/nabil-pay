@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class StoreRegistrationRequest extends FormRequest
 {
@@ -20,7 +21,6 @@ class StoreRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // Registration fields
             'registration.first_name' => ['required', 'string', 'max:255'],
             'registration.last_name' => ['required', 'string', 'max:255'],
             'registration.email' => ['nullable', 'email', 'max:255'],
@@ -36,10 +36,9 @@ class StoreRegistrationRequest extends FormRequest
             'registration.jacket_size' => ['nullable', 'string', 'in:S,M,L,XL,XXL'],
             'registration.cultural_dress_size' => ['nullable', 'string', 'in:S,M,L,XL,XXL'],
             'registration.weight_kg' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
-            'registration.applicant_breakfast' => ['required', 'in:yes,no'],
+            'registration.breakfast' => ['required', 'in:1,0'],
 
-            // Companions fields (optional array)
-            'companions' => ['sometimes', 'array', 'max:5'], // Limit to 5 companions
+            'companions' => ['sometimes', 'array', 'max:10'],
             'companions.*.first_name' => ['required', 'string', 'max:255'],
             'companions.*.last_name' => ['required', 'string', 'max:255'],
             'companions.*.food_preferences' => ['required', 'string', 'in:Vegetarian,Non-Vegetarian,Vegan'],
@@ -49,7 +48,7 @@ class StoreRegistrationRequest extends FormRequest
             'companions.*.jacket_size' => ['nullable', 'string', 'in:S,M,L,XL,XXL'],
             'companions.*.cultural_dress_size' => ['nullable', 'string', 'in:S,M,L,XL,XXL'],
             'companions.*.weight_kg' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
-            'companions.*.breakfast' => ['required', 'in:yes,no'],
+            'companions.*.breakfast' => ['required', 'in:1,0'],
         ];
     }
 
@@ -79,5 +78,12 @@ class StoreRegistrationRequest extends FormRequest
             }
         }
         $this->merge(['companions' => $companions]);
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        dd($validator->errors()->first());
+
+        return parent::failedValidation($validator);
     }
 }

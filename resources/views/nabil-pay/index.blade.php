@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -154,13 +153,13 @@
                         <div class="mb-4">
                             <label class="form-label d-block">Your Everest Champagne Breakfast?</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="applicant_breakfast"
-                                    id="applicantBreakfastYes" value="yes">
+                                <input class="form-check-input" type="radio" name="breakfast"
+                                    id="applicantBreakfastYes" value="1">
                                 <label class="form-check-label" for="applicantBreakfastYes">Yes (+ US$ 1,500)</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="applicant_breakfast"
-                                    id="applicantBreakfastNo" value="no" checked>
+                                <input class="form-check-input" type="radio" name="breakfast"
+                                    id="applicantBreakfastNo" value="0" checked>
                                 <label class="form-check-label" for="applicantBreakfastNo">No</label>
                             </div>
                         </div>
@@ -282,12 +281,12 @@
                                         <label class="form-label d-block">Everest Champagne Breakfast?</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input companion-breakfast-radio" type="radio"
-                                                name="companions[][breakfast]" value="yes">
+                                                name="companions[][breakfast]" value="1">
                                             <label class="form-check-label">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input companion-breakfast-radio" type="radio"
-                                                name="companions[][breakfast]" value="no" checked>
+                                                name="companions[][breakfast]" value="0" checked>
                                             <label class="form-check-label">No</label>
                                         </div>
                                     </div>
@@ -355,15 +354,35 @@
             const count = parseInt(numCompanionsSelect.value, 10);
             companionCardsContainer.innerHTML = ''; // Clear existing cards
 
-            for (let i = 1; i <= count; i++) {
+            for (let i = 0; i < count; i++) {
                 const card = document.importNode(companionTemplate, true);
-                card.querySelector('.companion-number').textContent = i;
-                card.querySelectorAll('input[name="companions[][breakfast]"]').forEach(radio => {
-                    radio.name = `companions[${i - 1}][breakfast]`;
-                    radio.id = `companion-${i}-breakfast-${radio.value}`;
-                    radio.nextElementSibling.setAttribute('for',
-                        `companion-${i}-breakfast-${radio.value}`);
+                card.querySelector('.companion-number').textContent = i + 1;
+
+                // Update all form fields with correct indexed names
+                card.querySelectorAll('[name]').forEach(input => {
+                    const originalName = input.getAttribute('name');
+
+                    // Skip if no name or already indexed properly
+                    if (!originalName.includes('companions[')) return;
+
+                    // Extract the field name inside the brackets
+                    const match = originalName.match(/\[\]\[([^\]]+)\]/);
+                    if (match && match[1]) {
+                        const field = match[1];
+                        const newName = `companions[${i}][${field}]`;
+                        input.setAttribute('name', newName);
+
+                        // If input is radio, also update id and label
+                        if (input.type === 'radio') {
+                            const newId = `companion-${i + 1}-breakfast-${input.value}`;
+                            input.id = newId;
+                            if (input.nextElementSibling?.tagName === 'LABEL') {
+                                input.nextElementSibling.setAttribute('for', newId);
+                            }
+                        }
+                    }
                 });
+
                 companionCardsContainer.appendChild(card);
             }
         }
@@ -376,7 +395,7 @@
 
             // 2. Calculate breakfast count
             let breakfastCount = 0;
-            if (document.querySelector('input[name="applicant_breakfast"]:checked').value === 'yes') {
+            if (document.querySelector('input[name="breakfast"]:checked').value === 'yes') {
                 breakfastCount++;
             }
             if (isAccompanied) {
@@ -447,7 +466,7 @@
                     jacket_size: formData.get('jacket_size') || null,
                     cultural_dress_size: formData.get('cultural_dress_size') || null,
                     weight_kg: formData.get('weight_kg') || null,
-                    applicant_breakfast: formData.get('applicant_breakfast')
+                    breakfast: formData.get('breakfast')
                 },
                 companions: []
             };
@@ -484,7 +503,7 @@
                 };
                 data.companions.push(companion);
             });
-            // Send data to server via AJAX
+
             fetch("{{ route('registration.store') }}", {
                     method: 'POST',
                     headers: {
@@ -506,7 +525,7 @@
                     }
                 })
                 .catch(error => {
-                    alert('Error: ' + error.message);
+                    console.log('Error: ' + error.message);
                 });
         });
 

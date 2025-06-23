@@ -23,17 +23,35 @@ class RegistrationController extends Controller
      */
     public function store(StoreRegistrationRequest $request)
     {
-        try {
-            $registration = DB::transaction(function () use ($request) {
-                $registrationData = $request->input('registration');
-                $registration = Registration::create($registrationData);
+        $config = config('custom.campaign');
+        $ratePerPerson = $config['rate_per_person'];
+        $breakfastRate = $config['breakfast_rate_per_person'];
 
+        try {
+            $registration = DB::transaction(function () use ($request, $ratePerPerson, $breakfastRate) {
+                $registrationData = $request->input('registration');
                 $companionsData = $request->input('companions', []);
+                $registrationData['total_amount'] = $ratePerPerson;
+                if( $registrationData['breakfast']) {
+                    $registrationData['total_amount'] += $breakfastRate;
+                }
+
+
+                $companionsInput = [];
                 if (! empty($companionsData)) {
                     foreach ($companionsData as $companionData) {
-                        $registration->companions()->create($companionData);
+                        $companionData['total_amount'] = $ratePerPerson;
+                        if( $companionData['breakfast']) {
+                            $companionData['total_amount'] += $breakfastRate;
+                        }
+                        $registrationData['total_amount'] += $companionData['total_amount'];
+                        $companionInput[] = $companionData;
                     }
                 }
+
+                $registration = Registration::create($registrationData);
+
+                $registration->companions()->createMany($companionInput);
 
                 return $registration;
             });

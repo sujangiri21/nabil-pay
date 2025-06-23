@@ -16,7 +16,9 @@ class Companion extends Model
         'jacket_size',
         'cultural_dress_size',
         'weight_kg',
+
         'breakfast',
+        'total_amount',
     ];
 
     public function registration()

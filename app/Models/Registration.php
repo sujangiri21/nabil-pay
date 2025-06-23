@@ -23,6 +23,11 @@ class Registration extends Model
         'cultural_dress_size',
         'weight_kg',
         'applicant_breakfast',
+
+        'breakfast',
+        'total_amount',
+
+        'payment_status',
     ];
 
     public function companions()

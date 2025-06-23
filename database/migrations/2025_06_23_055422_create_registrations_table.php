@@ -30,7 +30,12 @@ return new class extends Migration
             $table->string('jacket_size')->nullable();
             $table->string('cultural_dress_size')->nullable();
 
-            $table->decimal('weight_kg', 8, 2)->nullable()->unsigned();
+            $table->decimal('weight_kg', 8, 2)->nullable();
+
+            $table->boolean('breakfast')->default(false);
+            $table->decimal('total_amount', 10, 2)->nullable();
+
+            $table->string('payment_status')->nullable();
 
             $table->nullableTimestamps();
         });
@@ -52,6 +57,8 @@ return new class extends Migration
 
             $table->decimal('weight_kg', 8, 2)->nullable()->unsigned();
 
+            $table->boolean('breakfast')->default(false);
+            $table->decimal('total_amount', 10, 2)->nullable();
             $table->nullableTimestamps();
         });
     }

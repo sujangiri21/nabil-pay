@@ -1,11 +1,23 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('payment.nabil.form');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/table', function () {
+    return view('components.size.culture-dress-f');
+});
+
+Route::get('/registration', [App\Http\Controllers\RegistrationController::class, 'create'])->name('registration.create');
+Route::post('/registration', [App\Http\Controllers\RegistrationController::class, 'store'])->name('registration.store');
+
+Route::post('create-order', [App\Http\Controllers\NabilController::class, 'createOrder'])->name('payment.nabil.createOrder');
+Route::any('payment-response', [App\Http\Controllers\NabilController::class, 'paymentResponse'])->name('payment.nabil.response');
+Route::post('get-order-status', [App\Http\Controllers\NabilController::class, 'getOrderStatus'])->name('payment.nabil.getOrder');

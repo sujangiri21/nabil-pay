@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\NabilService;
+use Illuminate\Http\Request;
+
+class NabilController extends Controller
+{
+    protected $nabilService;
+
+    public function __construct(NabilService $nabilService)
+    {
+        $this->nabilService = $nabilService;
+    }
+
+    public function index()
+    {
+        $config = config('custom.campaign');
+        $ratePerPerson = $config['rate_per_person'];
+        $breakfastRate = $config['breakfast_rate_per_person'];
+
+        return view('nabil-pay.index', compact('ratePerPerson', 'breakfastRate'));
+    }
+
+
+    public function paymentResponse(Request $request)
+    {
+        $this->nabilService->logPaymentResponse($request->all());
+
+        $orderId = $request->orderId;
+        $sessionId = $request->sessionId;
+
+        try {
+            $response = $this->nabilService->getOrderStatus($orderId, $sessionId);
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function createOrder(Request $request)
+    {
+        $description = $request->description;
+        $amount = $request->amount;
+        $currency = $request->currency;
+        $paymentResponseUrl = route('payment.nabil.response');
+
+        try {
+            $payment = $this->nabilService->createOrder($amount, $currency, $description, $paymentResponseUrl);
+
+            return view(
+                'redirect',
+                [
+                    'url' => $payment['url'],
+                    'order_id' => $payment['order_id'],
+                    'session_id' => $payment['session_id'],
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getOrderStatus(Request $request)
+    {
+        $orderId = $request->order_id;
+        $sessionId = $request->session_id;
+
+        try {
+            $response = $this->nabilService->getOrderStatus($orderId, $sessionId);
+
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+}

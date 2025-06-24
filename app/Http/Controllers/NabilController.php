@@ -31,7 +31,7 @@ class NabilController extends Controller
     {
         $this->nabilService->logPaymentResponse($request->all());
         $xml = simplexml_load_string($request->get('xmlmsg', null));
-        $orderIdEncrypted = $xml->OrderIDEncrypted;
+        // $orderIdEncrypted = $xml->OrderIDEncrypted;
         $orderId = $request->orderId;
         $sessionId = $request->sessionId;
 
@@ -48,7 +48,7 @@ class NabilController extends Controller
                 return response()->json(['error' => 'Failed to retrieve order status.'], 500);
             }
 
-            $registration = RegistrationService::_getRegistrationFromOrder($orderIdEncrypted);
+            $registration = RegistrationService::_getRegistrationFromOrder($orderId);
             $registration->update(['payment_status' => $orderStatus]);
 
             Mail::to($registration->email)->send(new RegistrationResponseMail($registration, $registration->payment_status));

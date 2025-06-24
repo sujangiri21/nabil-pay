@@ -25,6 +25,7 @@ class RegistrationController extends Controller
      */
     public function store(StoreRegistrationRequest $request)
     {
+
         $config = config('custom.campaign');
         $ratePerPerson = $config['rate_per_person'];
         $breakfastRate = $config['breakfast_rate_per_person'];
@@ -57,14 +58,13 @@ class RegistrationController extends Controller
 
                 return $registration;
             });
-            // create order
+
             $paymentService = new NabilService;
-            // TODO: which currency to use
             $paymentResponse = $paymentService->createOrder($registration->total_amount, 524, 'Registration Id: '.$registration->id, route('payment.nabil.response'));
 
-            $falg = $registration->update([
-                'order_id' => $paymentResponse['order_id'],
-                'session_id' => $paymentResponse['session_id'],
+            $registration->update([
+                'order_id' => $paymentResponse['order_id_decrypted'],
+                'session_id' => $paymentResponse['session_id_decrypted'],
             ]);
 
             return redirect()->away($paymentResponse['url']."?ORDERID={$paymentResponse['order_id']}&SESSIONID={$paymentResponse['session_id']}");
@@ -78,7 +78,6 @@ class RegistrationController extends Controller
             //     ],
             // ], 201);
         } catch (\Exception $e) {
-            dd($e);
 
             return response()->json([
                 'success' => false,

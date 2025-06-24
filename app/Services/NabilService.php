@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
+use phpseclib3\Crypt\DES;
 
 class NabilService
 {
@@ -52,13 +53,13 @@ class NabilService
         $status = $data->Response->Status ?? null;
         if ($status == '00') {
             $orderId = $data->Response->Order->OrderID;
-            // $orderIdFilter = substr($orderId, 13);
-            // $orderIdDecrypted = $this->decrypt($orderIdFilter);
-            //
+            $orderIdFilter = substr($orderId, 13);
+            $orderIdDecrypted = $this->decrypt($orderIdFilter);
+
             $sessionId = $data->Response->Order->SessionID;
-            // $sessionIdFilter = substr($sessionId, 13);
-            // $sessionIdDecrypted = $this->decrypt($sessionIdFilter);
-            // $this->logCreateOrderResponse('order_id: '.$orderIdDecrypted.'session_id: '.$sessionIdDecrypted);
+            $sessionIdFilter = substr($sessionId, 13);
+            $sessionIdDecrypted = $this->decrypt($sessionIdFilter);
+            $this->logCreateOrderResponse('order_id: '.$orderIdDecrypted.'session_id: '.$sessionIdDecrypted);
 
             $url = $data->Response->Order->URL;
             // TODO: save into database for future reference
@@ -67,6 +68,8 @@ class NabilService
                 'url' => $url,
                 'order_id' => $orderId,
                 'session_id' => $sessionId,
+                'order_id_decrypted' => $orderIdDecrypted,
+                'session_id_decrypted' => $sessionIdDecrypted,
             ];
         } else {
             throw new \Exception('Payment creation failed!');
@@ -156,19 +159,33 @@ class NabilService
                 </TKKPG>';
     }
 
-    public function decrypt($cypherText)
+    public function decrypt(string $cypherText): string
     {
-        // return $cypherText;
-        $key = $this->decryptKey;
-        $binaryEncrypted = hex2bin($cypherText);
+        try {
+            // Validate input format
+            if (! ctype_xdigit($cypherText)) {
+                throw new \InvalidArgumentException('Invalid ciphertext format: must be hexadecimal.');
+            }
 
-        $decrypted = openssl_decrypt($binaryEncrypted, 'DES-ECB', hex2bin($key), OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, '');
+            // Initialize DES encryption with ECB mode
+            $des = new DES('ecb');
 
-        if ($decrypted === false) {
-            throw new \Exception('Decryption failed: '.openssl_error_string());
+            // Convert the decryption key from hex to binary and set it
+            $des->setKey(hex2bin($this->decryptKey));
+
+            // Disable padding
+            $des->disablePadding();
+
+            // Decrypt the ciphertext
+            $decrypted = $des->decrypt(hex2bin($cypherText));
+            if ($decrypted === false) {
+                throw new \RuntimeException('Decryption failed.');
+            }
+
+            return trim($decrypted);
+        } catch (\Exception $e) {
+            throw new \RuntimeException('An error occurred during decryption.'.$e->getMessage());
         }
-
-        return $decrypted;
     }
 
     protected function logCreateOrderRequest($request)

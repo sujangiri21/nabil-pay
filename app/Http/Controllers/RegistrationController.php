@@ -16,7 +16,7 @@ class RegistrationController extends Controller
         $ratePerPerson = $config['rate_per_person'];
         $breakfastRate = $config['breakfast_rate_per_person'];
 
-        return view('nabil-pay.index', compact('ratePerPerson', 'breakfastRate'));
+        return view('registration.create', compact('ratePerPerson', 'breakfastRate'));
 
     }
 
@@ -50,16 +50,16 @@ class RegistrationController extends Controller
                     }
                 }
 
+                $registrationData['payment_status'] = 'pending';
                 $registration = Registration::create($registrationData);
 
                 $registration->companions()->createMany($companionInput);
 
                 return $registration;
             });
-
             // create order
             $paymentService = new NabilService;
-            //TODO: which currency to use
+            // TODO: which currency to use
             $paymentResponse = $paymentService->createOrder($registration->total_amount, 524, 'Registration Id: '.$registration->id, route('payment.nabil.response'));
 
             $falg = $registration->update([
@@ -79,10 +79,18 @@ class RegistrationController extends Controller
             // ], 201);
         } catch (\Exception $e) {
             dd($e);
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to complete registration: '.$e->getMessage(),
             ], 422);
         }
+    }
+
+    public function show(Registration $registration)
+    {
+        $registration->load('companions');
+
+        return view('registration.show', compact('registration'));
     }
 }

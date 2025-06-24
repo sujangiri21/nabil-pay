@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('payment.nabil.form');
+    return redirect()->route('registration.create');
 });
 
 Auth::routes();
@@ -17,5 +17,6 @@ Route::get('/table', function () {
 
 Route::get('/registration', [App\Http\Controllers\RegistrationController::class, 'create'])->name('registration.create');
 Route::post('/registration', [App\Http\Controllers\RegistrationController::class, 'store'])->name('registration.store');
+Route::get('registration/{registration}/show', [App\Http\Controllers\RegistrationController::class, 'show'])->name('registration.show');
 
 Route::post('create-order', [App\Http\Controllers\NabilController::class, 'createOrder'])->name('payment.nabil.createOrder');

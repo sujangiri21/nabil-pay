@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminRegistrationResponseMail;
+use App\Mail\RegistrationResponseMail;
 use App\Services\NabilService;
 use App\Services\RegistrationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class NabilController extends Controller
 {
@@ -48,15 +51,21 @@ class NabilController extends Controller
             $registration = RegistrationService::_getRegistrationFromOrder($orderIdEncrypted);
             $registration->update(['payment_status' => $orderStatus]);
 
-            // TODO: possibly need to redirect to success/error page
+            Mail::to($registration->email)->send(new RegistrationResponseMail($registration, $registration->payment_status));
+            if ($adminMail = config('custom.admin_mail')) {
+                Mail::to($adminMail)->send(new AdminRegistrationResponseMail($registration));
+            }
 
-            $response = [
-                'orderId' => $orderId,
-                'status' => $orderStatus,
-                'registration_number' => $registration->registration_number,
-            ];
+            return redirect()->route('registration.show', ['registration' => $registration->id])
+                ->with('success', 'Registration Completed');
 
-            return response()->json($response);
+            // $response = [
+            //     'orderId' => $orderId,
+            //     'status' => $orderStatus,
+            //     'registration_number' => $registration->registration_number,
+            // ];
+            //
+            // return response()->json($response);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

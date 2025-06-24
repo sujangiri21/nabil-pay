@@ -41,7 +41,7 @@ class StoreRegistrationRequest extends FormRequest
 
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
             'visa_formalities' => ['required', 'string', 'in:Arranged,In Progress,Not Started'],
             'flight_arrival_date' => ['nullable', 'date'],
             'flight_departure_date' => ['nullable', 'date', 'after_or_equal:registration.flight_arrival_date'],

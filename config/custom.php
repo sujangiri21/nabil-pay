@@ -329,12 +329,19 @@ return [
     ],
 
     'nabil' => [
+        // 'url' => 'https://adapter.nabilbank.com/Exec',
         'url' => 'https://api.compassplus.com:11611/Exec',
-        'merchant_id' => '600000001066900',
-        // 'merchant_id' => 'NABIL106756',
+
+        // 'merchant_id' => '600000001066900',
+        'merchant_id' => 'NABIL106756',
+
         'decryption_key' => '0123456789abcdef',
-        'certificate_path' => 'app/private/nabil_key/eoeverestsummit.com.crt',
-        'key_path' => 'app/private/nabil_key/eoeverestsummit.com.key',
+
+        // 'certificate_path' => 'app/private/nabil_key/eoeverestsummit.com.pem',
+        // 'key_path' => 'app/private/nabil_key/eoeverestsummit.com.key',
+        'certificate_path' => 'app/private/hotel_tibet/hoteltibetintl.com.crt',
+        'key_path' => 'app/private/hotel_tibet/hoteltibetintl.com.key',
+
         'nabil_password' => ''
     ]
 ];

@@ -59,9 +59,10 @@ class RegistrationController extends Controller
 
             // create order
             $paymentService = new NabilService;
+            //TODO: which currency to use
             $paymentResponse = $paymentService->createOrder($registration->total_amount, 524, 'Registration Id: '.$registration->id, route('payment.nabil.response'));
 
-            $registration->update([
+            $falg = $registration->update([
                 'order_id' => $paymentResponse['order_id'],
                 'session_id' => $paymentResponse['session_id'],
             ]);

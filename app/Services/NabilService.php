@@ -31,7 +31,11 @@ class NabilService
 
     public function createOrder($amount, $currency, $description, $paymentResponseUrl)
     {
-        $amount = $amount * 100;
+        // TODO: using NPR Rs.1 for testing, change later
+        $amount = '100';
+        // $amount = $amount * 100;
+        $currency = '524';
+
         $approveUrl = $cancelUrl = $declineUrl = $paymentResponseUrl;
 
         $request = $this->buildCreateOrderRequest($amount, $currency, $description, $approveUrl, $cancelUrl, $declineUrl);
@@ -39,49 +43,34 @@ class NabilService
 
         $response = $this->sendRequest($request);
         $this->logCreateOrderResponse($response);
-        // dd($response);
 
-        // $data = simplexml_load_string($response);
-        $xml = simplexml_load_string($response);
-        if (! $xml || $xml->Response->Status != '00') {
-            throw new \Exception('Payment gateway returned an invalid response.');
+        $data = simplexml_load_string($response);
+
+        $data = json_encode($data);
+        $data = json_decode($data);
+
+        $status = $data->Response->Status ?? null;
+        if ($status == '00') {
+            $orderId = $data->Response->Order->OrderID;
+            // $orderIdFilter = substr($orderId, 13);
+            // $orderIdDecrypted = $this->decrypt($orderIdFilter);
+            //
+            $sessionId = $data->Response->Order->SessionID;
+            // $sessionIdFilter = substr($sessionId, 13);
+            // $sessionIdDecrypted = $this->decrypt($sessionIdFilter);
+            // $this->logCreateOrderResponse('order_id: '.$orderIdDecrypted.'session_id: '.$sessionIdDecrypted);
+
+            $url = $data->Response->Order->URL;
+            // TODO: save into database for future reference
+
+            return [
+                'url' => $url,
+                'order_id' => $orderId,
+                'session_id' => $sessionId,
+            ];
+        } else {
+            throw new \Exception('Payment creation failed!');
         }
-
-        $orderId = (string) $xml->Response->Order->OrderID;
-        $sessionId = (string) $xml->Response->Order->SessionID;
-        $redirectUrl = (string) $xml->Response->Order->URL;
-
-        return [
-            'url' => $redirectUrl,
-            'order_id' => $orderId,
-            'session_id' => $sessionId,
-        ];
-
-        // $data = json_encode($data);
-        // $data = json_decode($data);
-        //
-        // $status = $data->Response->Status ?? null;
-        // if ($status == '00') {
-        //     $orderId = $data->Response->Order->OrderID;
-        //     $orderIdFilter = substr($orderId, 13);
-        //     $orderIdDecrypted = $this->decrypt($orderIdFilter);
-        //
-        //     $sessionId = $data->Response->Order->SessionID;
-        //     $sessionIdFilter = substr($sessionId, 13);
-        //     $sessionIdDecrypted = $this->decrypt($sessionIdFilter);
-        //     $this->logCreateOrderResponse('order_id: ' . $orderIdDecrypted . 'session_id: ' . $sessionIdDecrypted);
-        //
-        //     $url = $data->Response->Order->URL;
-        //     //To Do: save into database for future reference
-        //
-        //     return [
-        //         'url' => $url,
-        //         'order_id' => $orderId,
-        //         'session_id' => $sessionId
-        //     ];
-        // } else {
-        //     throw new \Exception('Payment creation failed!');
-        // }
     }
 
     protected function buildCreateOrderRequest($amount, $currency, $description, $approveUrl, $cancelUrl, $declineUrl)
@@ -173,7 +162,7 @@ class NabilService
         $key = $this->decryptKey;
         $binaryEncrypted = hex2bin($cypherText);
 
-        $decrypted = openssl_decrypt($binaryEncrypted, 'des-ecb', hex2bin($key), OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, '');
+        $decrypted = openssl_decrypt($binaryEncrypted, 'DES-ECB', hex2bin($key), OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, '');
 
         if ($decrypted === false) {
             throw new \Exception('Decryption failed: '.openssl_error_string());

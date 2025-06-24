@@ -19,5 +19,3 @@ Route::get('/registration', [App\Http\Controllers\RegistrationController::class,
 Route::post('/registration', [App\Http\Controllers\RegistrationController::class, 'store'])->name('registration.store');
 
 Route::post('create-order', [App\Http\Controllers\NabilController::class, 'createOrder'])->name('payment.nabil.createOrder');
-Route::any('payment-response', [App\Http\Controllers\NabilController::class, 'paymentResponse'])->name('payment.nabil.response');
-Route::post('get-order-status', [App\Http\Controllers\NabilController::class, 'getOrderStatus'])->name('payment.nabil.getOrder');

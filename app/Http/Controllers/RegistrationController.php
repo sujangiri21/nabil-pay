@@ -63,8 +63,8 @@ class RegistrationController extends Controller
             $paymentResponse = $paymentService->createOrder($registration->total_amount, 524, 'Registration Id: '.$registration->id, route('payment.nabil.response'));
 
             $registration->update([
-                'order_id' => $paymentResponse['order_id_decrypted'],
-                'session_id' => $paymentResponse['session_id_decrypted'],
+                'order_id' => $paymentResponse['order_id'],
+                'session_id' => $paymentResponse['session_id'],
             ]);
 
             return redirect()->away($paymentResponse['url']."?ORDERID={$paymentResponse['order_id']}&SESSIONID={$paymentResponse['session_id']}");

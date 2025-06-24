@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'domain' => env('APP_URL'),
 
     'campaign' => [
         'rate_per_person' => 2590,
@@ -331,10 +330,11 @@ return [
 
     'nabil' => [
         'url' => 'https://api.compassplus.com:11611/Exec',
-        'merchant_id' => 'NABIL106756',
+        'merchant_id' => '600000001066900',
+        // 'merchant_id' => 'NABIL106756',
         'decryption_key' => '0123456789abcdef',
-        'certificate_path' => 'app/private/nabil_key/hoteltibetintl.com.crt',
-        'key_path' => 'app/private/nabil_key/hoteltibetintl.com.key',
+        'certificate_path' => 'app/private/nabil_key/eoeverestsummit.com.crt',
+        'key_path' => 'app/private/nabil_key/eoeverestsummit.com.key',
         'nabil_password' => ''
     ]
 ];

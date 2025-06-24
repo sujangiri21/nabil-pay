@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Models\Registration;
+use App\Services\NabilService;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class RegistrationController extends Controller
@@ -29,19 +31,18 @@ class RegistrationController extends Controller
 
         try {
             $registration = DB::transaction(function () use ($request, $ratePerPerson, $breakfastRate) {
-                $registrationData = $request->input('registration');
-                $companionsData = $request->input('companions', []);
+                $registrationData = $request->validated();
+                $companionsData = Arr::get($registrationData, 'companions', []);
                 $registrationData['total_amount'] = $ratePerPerson;
-                if( $registrationData['breakfast']) {
+                if ($registrationData['breakfast']) {
                     $registrationData['total_amount'] += $breakfastRate;
                 }
 
-
-                $companionsInput = [];
+                $companionInput = [];
                 if (! empty($companionsData)) {
                     foreach ($companionsData as $companionData) {
                         $companionData['total_amount'] = $ratePerPerson;
-                        if( $companionData['breakfast']) {
+                        if ($companionData['breakfast']) {
                             $companionData['total_amount'] += $breakfastRate;
                         }
                         $registrationData['total_amount'] += $companionData['total_amount'];
@@ -56,15 +57,27 @@ class RegistrationController extends Controller
                 return $registration;
             });
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Registration completed successfully',
-                'data' => [
-                    'registration_id' => $registration->id,
-                    'companion_count' => $registration->companions->count(),
-                ],
-            ], 201);
+            // create order
+            $paymentService = new NabilService;
+            $paymentResponse = $paymentService->createOrder($registration->total_amount, 524, 'Registration Id: '.$registration->id, route('payment.nabil.response'));
+
+            $registration->update([
+                'order_id' => $paymentResponse['order_id'],
+                'session_id' => $paymentResponse['session_id'],
+            ]);
+
+            return redirect()->away($paymentResponse['url']."?ORDERID={$paymentResponse['order_id']}&SESSIONID={$paymentResponse['session_id']}");
+
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'Registration completed successfully',
+            //     'data' => [
+            //         'registration_id' => $registration->id,
+            //         'companion_count' => $registration->companions->count(),
+            //     ],
+            // ], 201);
         } catch (\Exception $e) {
+            dd($e);
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to complete registration: '.$e->getMessage(),

@@ -7,10 +7,15 @@ use Illuminate\Support\Facades\Log;
 class NabilService
 {
     public $gatewayUrl;
+
     public $merchant;
+
     public $decryptKey;
+
     public $certFile;
+
     public $keyFile;
+
     public $password;
 
     public function __construct()
@@ -28,37 +33,55 @@ class NabilService
     {
         $amount = $amount * 100;
         $approveUrl = $cancelUrl = $declineUrl = $paymentResponseUrl;
+
         $request = $this->buildCreateOrderRequest($amount, $currency, $description, $approveUrl, $cancelUrl, $declineUrl);
-        dd($request);
         $this->logCreateOrderRequest($request);
+
         $response = $this->sendRequest($request);
-
         $this->logCreateOrderResponse($response);
-        $data = simplexml_load_string($response);
-        $data = json_encode($data);
-        $data = json_decode($data);
-        $status = $data->Response->Status ?? null;
-        if ($status == '00') {
-            $orderId = $data->Response->Order->OrderID;
-            $orderIdFilter = substr($orderId, 13);
-            $orderIdDecrypted = $this->decrypt($orderIdFilter);
+        // dd($response);
 
-            $sessionId = $data->Response->Order->SessionID;
-            $sessionIdFilter = substr($sessionId, 13);
-            $sessionIdDecrypted = $this->decrypt($sessionIdFilter);
-            $this->logCreateOrderResponse('order_id: ' . $orderIdDecrypted . 'session_id: ' . $sessionIdDecrypted);
-
-            $url = $data->Response->Order->URL;
-            //To Do: save into database for future reference
-
-            return [
-                'url' => $url,
-                'order_id' => $orderId,
-                'session_id' => $sessionId
-            ];
-        } else {
-            throw new \Exception('Payment creation failed!');
+        // $data = simplexml_load_string($response);
+        $xml = simplexml_load_string($response);
+        if (! $xml || $xml->Response->Status != '00') {
+            throw new \Exception('Payment gateway returned an invalid response.');
         }
+
+        $orderId = (string) $xml->Response->Order->OrderID;
+        $sessionId = (string) $xml->Response->Order->SessionID;
+        $redirectUrl = (string) $xml->Response->Order->URL;
+
+        return [
+            'url' => $redirectUrl,
+            'order_id' => $orderId,
+            'session_id' => $sessionId,
+        ];
+
+        // $data = json_encode($data);
+        // $data = json_decode($data);
+        //
+        // $status = $data->Response->Status ?? null;
+        // if ($status == '00') {
+        //     $orderId = $data->Response->Order->OrderID;
+        //     $orderIdFilter = substr($orderId, 13);
+        //     $orderIdDecrypted = $this->decrypt($orderIdFilter);
+        //
+        //     $sessionId = $data->Response->Order->SessionID;
+        //     $sessionIdFilter = substr($sessionId, 13);
+        //     $sessionIdDecrypted = $this->decrypt($sessionIdFilter);
+        //     $this->logCreateOrderResponse('order_id: ' . $orderIdDecrypted . 'session_id: ' . $sessionIdDecrypted);
+        //
+        //     $url = $data->Response->Order->URL;
+        //     //To Do: save into database for future reference
+        //
+        //     return [
+        //         'url' => $url,
+        //         'order_id' => $orderId,
+        //         'session_id' => $sessionId
+        //     ];
+        // } else {
+        //     throw new \Exception('Payment creation failed!');
+        // }
     }
 
     protected function buildCreateOrderRequest($amount, $currency, $description, $approveUrl, $cancelUrl, $declineUrl)
@@ -70,13 +93,13 @@ class NabilService
                         <Language>EN</Language>
                         <Order>
                             <OrderType>Purchase</OrderType>
-                            <Merchant>' . $this->merchant . '</Merchant>
-                            <Amount>' . $amount . '</Amount>
-                            <Currency>' . $currency . '</Currency>
-                            <Description>' . $description . '</Description>
-                            <ApproveURL>' . $approveUrl . '</ApproveURL>
-                            <CancelURL>' . $cancelUrl . '</CancelURL>
-                            <DeclineURL>' . $declineUrl . '</DeclineURL>
+                            <Merchant>'.$this->merchant.'</Merchant>
+                            <Amount>'.$amount.'</Amount>
+                            <Currency>'.$currency.'</Currency>
+                            <Description>'.$description.'</Description>
+                            <ApproveURL>'.$approveUrl.'</ApproveURL>
+                            <CancelURL>'.$cancelUrl.'</CancelURL>
+                            <DeclineURL>'.$declineUrl.'</DeclineURL>
                             <Fee>0</Fee>
                         </Order>
                     </Request>
@@ -86,7 +109,7 @@ class NabilService
     protected function sendRequest($request)
     {
         $curl = curl_init();
-        $options = array(
+        $options = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_FOLLOWLOCATION => true,
@@ -95,21 +118,22 @@ class NabilService
             CURLOPT_POST => true,
             CURLOPT_URL => $this->gatewayUrl,
             CURLOPT_POSTFIELDS => $request,
-            CURLOPT_HTTPHEADER => array('Content-Type: text/xml'),
+            CURLOPT_HTTPHEADER => ['Content-Type: text/xml'],
             CURLOPT_TIMEOUT => 300,
             CURLOPT_SSLCERT => $this->certFile,
             CURLOPT_SSLKEY => $this->keyFile,
             CURLOPT_SSLKEYPASSWD => $this->password,
-        );
+        ];
 
         curl_setopt_array($curl, $options);
         $response = curl_exec($curl);
 
-        if (!$response) {
-            throw new \Exception("Curl Error: " . curl_error($curl));
+        if (! $response) {
+            throw new \Exception('Curl Error: '.curl_error($curl));
         }
 
         curl_close($curl);
+
         return $response;
     }
 
@@ -123,6 +147,7 @@ class NabilService
         $data = simplexml_load_string($response);
         $data = json_encode($data);
         $data = json_decode($data);
+
         return $data;
     }
 
@@ -134,24 +159,24 @@ class NabilService
                         <Operation>GetOrderStatus</Operation>
                         <Language>EN</Language>
                         <Order>
-                            <Merchant>' . $this->merchant . '</Merchant>
-                            <OrderID>' . $orderId . '</OrderID>
+                            <Merchant>'.$this->merchant.'</Merchant>
+                            <OrderID>'.$orderId.'</OrderID>
                         </Order>
-                        <SessionID>' . $sessionId . '</SessionID>
+                        <SessionID>'.$sessionId.'</SessionID>
                     </Request>
                 </TKKPG>';
     }
 
-    function decrypt($cypherText)
+    public function decrypt($cypherText)
     {
-        //return $cypherText;
+        // return $cypherText;
         $key = $this->decryptKey;
         $binaryEncrypted = hex2bin($cypherText);
 
         $decrypted = openssl_decrypt($binaryEncrypted, 'des-ecb', hex2bin($key), OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, '');
 
         if ($decrypted === false) {
-            throw new \Exception("Decryption failed: " . openssl_error_string());
+            throw new \Exception('Decryption failed: '.openssl_error_string());
         }
 
         return $decrypted;
@@ -169,7 +194,7 @@ class NabilService
 
     public function logPaymentResponse($response)
     {
-        Log::channel('nabil_log')->info("Payment Response: " . print_r($response, true));
+        Log::channel('nabil_log')->info('Payment Response: '.print_r($response, true));
     }
 
     protected function logGetOrderStatusRequest($request)

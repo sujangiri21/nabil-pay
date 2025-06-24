@@ -36,7 +36,9 @@ return new class extends Migration
             $table->decimal('total_amount', 10, 2)->nullable();
 
             $table->string('payment_status')->nullable();
-
+            $table->string('order_id')->nullable();
+            $table->string('session_id')->nullable();
+            $table->string('payment_reference')->nullable();
             $table->nullableTimestamps();
         });
 

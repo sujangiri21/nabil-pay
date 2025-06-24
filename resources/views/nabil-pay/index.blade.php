@@ -7,6 +7,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" --}}
+    {{--     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
     <style>
 
     </style>
@@ -446,88 +449,88 @@
         });
 
         // --- Form Submission ---
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(form);
-            const data = {
-                registration: {
-                    first_name: formData.get('first_name'),
-                    last_name: formData.get('last_name'),
-                    email: formData.get('email') || null,
-                    visa_formalities: formData.get('visa_formalities'),
-                    flight_arrival_date: formData.get('flight_arrival_date') || null,
-                    flight_departure_date: formData.get('flight_departure_date') || null,
-                    flight_airline: formData.get('flight_airline') || null,
-                    flight_number: formData.get('flight_number') || null,
-                    food_preferences: formData.get('food_preferences'),
-                    food_allergies: formData.get('food_allergies') || null,
-                    hotel_booking_status: formData.get('hotel_booking_status') || null,
-                    tshirt_size: formData.get('tshirt_size') || null,
-                    jacket_size: formData.get('jacket_size') || null,
-                    cultural_dress_size: formData.get('cultural_dress_size') || null,
-                    weight_kg: formData.get('weight_kg') || null,
-                    breakfast: formData.get('breakfast')
-                },
-                companions: []
-            };
+        //form.addEventListener('submit', function(event) {
+        //    event.preventDefault();
+        //    const formData = new FormData(form);
+        //    const data = {
+        //        registration: {
+        //            first_name: formData.get('first_name'),
+        //            last_name: formData.get('last_name'),
+        //            email: formData.get('email') || null,
+        //            visa_formalities: formData.get('visa_formalities'),
+        //            flight_arrival_date: formData.get('flight_arrival_date') || null,
+        //            flight_departure_date: formData.get('flight_departure_date') || null,
+        //            flight_airline: formData.get('flight_airline') || null,
+        //            flight_number: formData.get('flight_number') || null,
+        //            food_preferences: formData.get('food_preferences'),
+        //            food_allergies: formData.get('food_allergies') || null,
+        //            hotel_booking_status: formData.get('hotel_booking_status') || null,
+        //            tshirt_size: formData.get('tshirt_size') || null,
+        //            jacket_size: formData.get('jacket_size') || null,
+        //            cultural_dress_size: formData.get('cultural_dress_size') || null,
+        //            weight_kg: formData.get('weight_kg') || null,
+        //            breakfast: formData.get('breakfast')
+        //        },
+        //        companions: []
+        //    };
 
-            // Collect companion data
-            const companionCards = document.querySelectorAll('.companion-card');
-            companionCards.forEach((card, index) => {
-                const companion = {
-                    first_name: card.querySelector(
-                        `input[name="companions[${index}][first_name]"]`).value,
-                    last_name: card.querySelector(
-                        `input[name="companions[${index}][last_name]"]`).value,
-                    food_preferences: card.querySelector(
-                        `select[name="companions[${index}][food_preferences]"]`).value,
-                    food_allergies: card.querySelector(
-                            `textarea[name="companions[${index}][food_allergies]"]`)
-                        .value || null,
-                    hotel_booking_status: card.querySelector(
-                            `select[name="companions[${index}][hotel_booking_status]"]`)
-                        .value || null,
-                    tshirt_size: card.querySelector(
-                            `select[name="companions[${index}][tshirt_size]"]`).value ||
-                        null,
-                    jacket_size: card.querySelector(
-                            `select[name="companions[${index}][jacket_size]"]`).value ||
-                        null,
-                    cultural_dress_size: card.querySelector(
-                            `select[name="companions[${index}][cultural_dress_size]"]`)
-                        .value || null,
-                    weight_kg: card.querySelector(
-                        `input[name="companions[${index}][weight_kg]"]`).value || null,
-                    breakfast: card.querySelector(
-                        `input[name="companions[${index}][breakfast]"]:checked`).value
-                };
-                data.companions.push(companion);
-            });
+        //    // Collect companion data
+        //    const companionCards = document.querySelectorAll('.companion-card');
+        //    companionCards.forEach((card, index) => {
+        //        const companion = {
+        //            first_name: card.querySelector(
+        //                `input[name="companions[${index}][first_name]"]`).value,
+        //            last_name: card.querySelector(
+        //                `input[name="companions[${index}][last_name]"]`).value,
+        //            food_preferences: card.querySelector(
+        //                `select[name="companions[${index}][food_preferences]"]`).value,
+        //            food_allergies: card.querySelector(
+        //                    `textarea[name="companions[${index}][food_allergies]"]`)
+        //                .value || null,
+        //            hotel_booking_status: card.querySelector(
+        //                    `select[name="companions[${index}][hotel_booking_status]"]`)
+        //                .value || null,
+        //            tshirt_size: card.querySelector(
+        //                    `select[name="companions[${index}][tshirt_size]"]`).value ||
+        //                null,
+        //            jacket_size: card.querySelector(
+        //                    `select[name="companions[${index}][jacket_size]"]`).value ||
+        //                null,
+        //            cultural_dress_size: card.querySelector(
+        //                    `select[name="companions[${index}][cultural_dress_size]"]`)
+        //                .value || null,
+        //            weight_kg: card.querySelector(
+        //                `input[name="companions[${index}][weight_kg]"]`).value || null,
+        //            breakfast: card.querySelector(
+        //                `input[name="companions[${index}][breakfast]"]:checked`).value
+        //        };
+        //        data.companions.push(companion);
+        //    });
 
-            fetch("{{ route('registration.store') }}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        alert('Registration successful!');
-                        form.reset();
-                        companionCardsContainer.innerHTML = '';
-                        companionSection.classList.add('d-none');
-                        updateCostAndSummary();
-                    } else {
-                        alert('Error: ' + (result.message || 'Registration failed'));
-                    }
-                })
-                .catch(error => {
-                    console.log('Error: ' + error.message);
-                });
-        });
+        //    fetch("{{ route('registration.store') }}", {
+        //            method: 'POST',
+        //            headers: {
+        //                'Content-Type': 'application/json',
+        //                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        //            },
+        //            body: JSON.stringify(data)
+        //        })
+        //        .then(response => response.json())
+        //        .then(result => {
+        //            if (result.success) {
+        //                alert('Registration successful!');
+        //                form.reset();
+        //                companionCardsContainer.innerHTML = '';
+        //                companionSection.classList.add('d-none');
+        //                updateCostAndSummary();
+        //            } else {
+        //                alert('Error: ' + (result.message || 'Registration failed'));
+        //            }
+        //        })
+        //        .catch(error => {
+        //            console.log('Error: ' + error.message);
+        //        });
+        //});
 
         // --- Initial State ---
         updateCostAndSummary();

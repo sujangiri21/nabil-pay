@@ -266,13 +266,13 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input @error('accompanied') is-invalid @enderror" type="radio"
                                     name="accompanied" id="accompaniedYes" value="yes"
-                                    {{ old('accompanied') === '1' ? 'checked' : '' }}>
+                                    {{ old('accompanied') === 'yes' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="accompaniedYes">Yes</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input @error('accompanied') is-invalid @enderror" type="radio"
                                     name="accompanied" id="accompaniedNo" value="no"
-                                    {{ old('accompanied', '0') === '0' ? 'checked' : '' }}>
+                                    {{ old('accompanied', 'no') === 'no' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="accompaniedNo">No</label>
                             </div>
                             @error('accompanied')
@@ -512,7 +512,7 @@
 
             function updateCostAndSummary() {
                 // 1. Calculate number of people
-                const isAccompanied = document.querySelector('input[name="accompanied"]:checked').value === '1';
+                const isAccompanied = document.querySelector('input[name="accompanied"]:checked').value === 'yes';
                 const numCompanions = isAccompanied ? parseInt(numCompanionsSelect.value, 10) : 0;
                 const totalPeople = 1 + numCompanions;
 
@@ -550,7 +550,7 @@
 
                 // If the "accompanied" radio is changed
                 if (target.name === 'accompanied') {
-                    if (target.value === '1') {
+                    if (target.value === 'yes') {
                         companionSection.classList.remove('d-none');
                         generateCompanionCards();
                     } else {

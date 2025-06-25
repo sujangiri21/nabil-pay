@@ -21,7 +21,8 @@ class NabilService
 
     public function __construct()
     {
-        $config = config('custom.nabil');
+        $mode = config('custom.mode');
+        $config = config("custom.nabil.$mode");
         $this->gatewayUrl = $config['url'];
         $this->merchant = $config['merchant_id'];
         $this->decryptKey = $config['decryption_key'];
@@ -32,10 +33,13 @@ class NabilService
 
     public function createOrder($amount, $currency, $description, $paymentResponseUrl)
     {
-        // TODO: using NPR Rs.1 for testing, change later
-        $amount = '100';
-        // $amount = $amount * 100;
-        $currency = '524';
+
+        if (config('custom.mode') == 'test') {
+            $amount = '100';
+            $currency = '524'; // 840 for usd
+        } else {
+            $amount = $amount * 100;
+        }
 
         $approveUrl = $cancelUrl = $declineUrl = $paymentResponseUrl;
 

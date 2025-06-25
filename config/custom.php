@@ -326,23 +326,24 @@ return [
             'NPR' => 'fc14692f245b4f78b185db4d01f673ee',
         ],
     ],
+    'mode' => env('NABIL_MODE', 'test'),
 
     'nabil' => [
-        // 'url' => 'https://adapter.nabilbank.com/Exec',
-        'url' => 'https://api.compassplus.com:11611/Exec',
-
-        // 'merchant_id' => '600000001066900',
-        'merchant_id' => 'NABIL106756',
-
-        'decryption_key' => '0123456789abcdef',
-
-        // 'certificate_path' => 'app/private/nabil_key/eoeverestsummit.com.pem',
-        // 'key_path' => 'app/private/nabil_key/eoeverestsummit.com.key',
-        'certificate_path' => 'app/private/hotel_tibet/hoteltibetintl.com.crt',
-        'key_path' => 'app/private/hotel_tibet/hoteltibetintl.com.key',
-
-        'nabil_password' => '',
-
-        'status' => ['APPVOED', 'CANCELED', 'DECLINED'],
+        'test' => [
+            'url' => env('NABIL_TEST_URL'),
+            'merchant_id' => env('NABIL_TEST_MERCHANT_ID'),
+            'decryption_key' => env('NABIL_TEST_DEC_KEY'),
+            'certificate_path' => env('NABIL_TEST_CERT'),
+            'key_path' => env('NABIL_TEST_KEY'),
+            'nabil_password' => env('NABIL_TEST_PASSWORD', ''),
+        ],
+        'live' => [
+            'url' => env('NABIL_LIVE_URL'),
+            'merchant_id' => env('NABIL_LIVE_MERCHANT_ID'),
+            'decryption_key' => env('NABIL_LIVE_DEC_KEY'),
+            'certificate_path' => env('NABIL_LIVE_CERT'),
+            'key_path' => env('NABIL_LIVE_KEY'),
+            'nabil_password' => env('NABIL_LIVE_PASSWORD', ''),
+        ],
     ],
 ];

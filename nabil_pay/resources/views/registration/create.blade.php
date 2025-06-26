@@ -4,13 +4,17 @@
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
-                <div class="p-4 bg-white rounded shadow-sm p-md-5">
-
-                    <form id="registration-form" action="{{ route('registration.store') }}" method="post"
+                <div class="p-4 bg-white shadow-sm " style="
+    border-radius: 20px !important;
+    box-shadow: 0px 0px 8px 0px #a3a0a0 !important;
+">
+                           <h1 style=" border-radius: 5px; background: #cd3363;padding: 10px 41px;margin-bottom: -7px;color: #fff;line-height: 1.2;
+    "> Payment</h1>
+                    <form class="pk-form" style="padding: 40px 45px;" id="registration-form" action="{{ route('registration.store') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
-                        <!-- Personal Details -->
-                        <h4 class="mb-4">Your Details</h4>
+                        <!-- Personal Details --->
+                    
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="first_name" class="form-label requried-label">First Name</label>
@@ -146,7 +150,17 @@
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-4">
-                                <label for="tshirt_size" class="form-label">T-Shirt Size</label>
+                                <label for="tshirt_size" class="form-label">T-Shirt Size <a class="uk-button uk-text-primary uk-button-link" href="#modal-container-t" uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" style="width: 20px; height:20px;"> </a>
+
+<div id="modal-container-t" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <p><img src="{{ asset('images/size-chart-image.jpg') }}"> </p>
+
+    </div>
+</div> </label>
                                 <select class="form-select @error('tshirt_size') is-invalid @enderror" id="tshirt_size"
                                     name="tshirt_size">
                                     <option value="" disabled {{ old('tshirt_size') ? '' : 'selected' }}>
@@ -166,16 +180,21 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3 col-md-12">
-                                <img src="{{ asset('images/tshirt_size_m.jpg') }}" class="img-fluid"
-                                    alt="T-Shirt Size Male">
-                                <img src="{{ asset('images/tshirt_size_f.jpg') }}" class="img-fluid"
-                                    alt="T-Shirt Size Female">
-                            </div>
+                         
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-4">
-                                <label for="jacket_size" class="form-label">Jacket Size</label>
+                                <label for="jacket_size" class="form-label">Jacket Size <a class="uk-button uk-text-primary uk-button-link" href="#modal-container" uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" style="width: 20px; height:20px;"></a>
+
+<div id="modal-container" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <p><img src="{{ asset('images/jaceket-size-chart-image.jpg') }}"> </p>
+
+    </div>
+</div></label>
                                 <select class="form-select @error('jacket_size') is-invalid @enderror" id="jacket_size"
                                     name="jacket_size">
                                     <option value="" disabled {{ old('jacket_size') ? '' : 'selected' }}>
@@ -195,16 +214,22 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3 col-md-12">
-                                <img src="{{ asset('images/jacket_size_m.jpg') }}" class="img-fluid"
-                                    alt="Jacket Size Male">
-                                <img src="{{ asset('images/jacket_size_f.jpg') }}" class="img-fluid"
-                                    alt="Jacket Size Female">
-                            </div>
+                          
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-4">
-                                <label for="cultural_dress_size" class="form-label">Cultural Dress Size</label>
+                                <label for="cultural_dress_size" class="form-label">Cultural Dress Size  <a class="uk-button uk-text-primary uk-button-link" href="#modal-container-cul" uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" style="width: 20px; height:20px;"></a>
+
+<div id="modal-container-cul" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <p>  <x-size.culture-dress-f />
+                                <x-size.culture-dress-m /></p>
+
+    </div>
+</div></label>
                                 <select class="form-select @error('cultural_dress_size') is-invalid @enderror"
                                     id="cultural_dress_size" name="cultural_dress_size">
                                     <option value="" disabled {{ old('cultural_dress_size') ? '' : 'selected' }}>
@@ -224,10 +249,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3 col-md-12">
-                                <x-size.culture-dress-f />
-                                <x-size.culture-dress-m />
-                            </div>
+                         
                         </div>
                         <div class="mb-3">
                             <label for="weight_kg" class="form-label">Weight (kg)</label>
@@ -357,7 +379,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-md-4">
-                                            <label class="form-label">T-Shirt Size</label>
+                                            <label class="form-label">T-Shirt Size <a class="uk-button uk-text-primary uk-button-link" href="#modal-container-t" uk-toggle><span class="uk-margin-small-right uk-icon" uk-icon="info"> View Details</a></label>
                                             <select class="form-select" name="companions[][tshirt_size]">
                                                 <option value="" disabled selected>Select Size</option>
                                                 <option value="S">Small</option>

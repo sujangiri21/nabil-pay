@@ -7,13 +7,9 @@ Route::get('/', function () {
     return redirect()->route('registration.create');
 });
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/table', function () {
-    return view('components.size.culture-dress-f');
-});
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/registration', [App\Http\Controllers\RegistrationController::class, 'create'])->name('registration.create');
 Route::post('/registration', [App\Http\Controllers\RegistrationController::class, 'store'])->name('registration.store');

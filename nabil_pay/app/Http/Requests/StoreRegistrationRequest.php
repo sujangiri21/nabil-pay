@@ -100,8 +100,6 @@ class StoreRegistrationRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        dd($validator->errors()->first());
-
         return parent::failedValidation($validator);
     }
 }

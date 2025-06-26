@@ -19,6 +19,14 @@
     {{--     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.11/dist/js/uikit-icons.min.js"></script>
+
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
@@ -46,7 +54,7 @@
                     {{--     <li class="nav-item"> --}}
                     {{--         <a class="nav-link" href="#">{{ __('Login') }}</a> --}}
                     {{--     </li> --}}
-                    {{----}}
+                    {{-- --}}
                     {{--     <li class="nav-item"> --}}
                     {{--         <a class="nav-link" href="#">{{ __('Register') }}</a> --}}
                     {{--     </li> --}}

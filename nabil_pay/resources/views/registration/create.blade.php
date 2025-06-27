@@ -4,17 +4,20 @@
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
-                <div class="p-4 bg-white shadow-sm " style="
+                <div class="p-4 bg-white shadow-sm"
+                    style="
     border-radius: 20px !important;
     box-shadow: 0px 0px 8px 0px #a3a0a0 !important;
 ">
-                           <h1 style=" border-radius: 5px; background: #cd3363;padding: 10px 41px;margin-bottom: -7px;color: #fff;line-height: 1.2;
-    "> Payment</h1>
-                    <form class="pk-form" style="padding: 40px 45px;" id="registration-form" action="{{ route('registration.store') }}" method="post"
-                        enctype="multipart/form-data">
+                    <h1
+                        style=" border-radius: 5px; background: #cd3363;padding: 10px 41px;margin-bottom: -7px;color: #fff;line-height: 1.2;
+    ">
+                        Payment</h1>
+                    <form class="pk-form" style="padding: 40px 45px;" id="registration-form"
+                        action="{{ route('registration.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <!-- Personal Details --->
-                    
+
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="first_name" class="form-label requried-label">First Name</label>
@@ -127,139 +130,152 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="hotel_booking_status" class="form-label">Hotel Booking Status</label>
-                            <select class="form-select @error('hotel_booking_status') is-invalid @enderror"
-                                id="hotel_booking_status" name="hotel_booking_status">
-                                <option value="" disabled {{ old('hotel_booking_status') ? '' : 'selected' }}>
-                                    Select Hotel Status
-                                </option>
-                                <option value="Booked" {{ old('hotel_booking_status') === 'Booked' ? 'selected' : '' }}>
-                                    Booked
-                                </option>
-                                <option value="Not Booked"
-                                    {{ old('hotel_booking_status') === 'Not Booked' ? 'selected' : '' }}>Not Booked
-                                </option>
-                                <option value="Pending" {{ old('hotel_booking_status') === 'Pending' ? 'selected' : '' }}>
-                                    Pending
-                                </option>
-                            </select>
-                            @error('hotel_booking_status')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-4">
-                                <label for="tshirt_size" class="form-label">T-Shirt Size <a class="uk-button uk-text-primary uk-button-link" href="#modal-container-t" uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" style="width: 20px; height:20px;"> </a>
-
-<div id="modal-container-t" class="uk-modal-container" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-
-        <p><img src="{{ asset('images/size-chart-image.jpg') }}"> </p>
-
-    </div>
-</div> </label>
-                                <select class="form-select @error('tshirt_size') is-invalid @enderror" id="tshirt_size"
-                                    name="tshirt_size">
-                                    <option value="" disabled {{ old('tshirt_size') ? '' : 'selected' }}>
-                                        Select Size</option>
-                                    <option value="S" {{ old('tshirt_size') === 'S' ? 'selected' : '' }}>
-                                        Small</option>
-                                    <option value="M" {{ old('tshirt_size') === 'M' ? 'selected' : '' }}>
-                                        Medium</option>
-                                    <option value="L" {{ old('tshirt_size') === 'L' ? 'selected' : '' }}>
-                                        Large</option>
-                                    <option value="XL" {{ old('tshirt_size') === 'XL' ? 'selected' : '' }}>XL
-                                    </option>
-                                    <option value="XXL" {{ old('tshirt_size') === 'XXL' ? 'selected' : '' }}>
-                                        XXL</option>
-                                </select>
-                                @error('tshirt_size')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                         
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-4">
-                                <label for="jacket_size" class="form-label">Jacket Size <a class="uk-button uk-text-primary uk-button-link" href="#modal-container" uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" style="width: 20px; height:20px;"></a>
-
-<div id="modal-container" class="uk-modal-container" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-
-        <p><img src="{{ asset('images/jaceket-size-chart-image.jpg') }}"> </p>
-
-    </div>
-</div></label>
-                                <select class="form-select @error('jacket_size') is-invalid @enderror" id="jacket_size"
-                                    name="jacket_size">
-                                    <option value="" disabled {{ old('jacket_size') ? '' : 'selected' }}>
-                                        Select Size</option>
-                                    <option value="S" {{ old('jacket_size') === 'S' ? 'selected' : '' }}>
-                                        Small</option>
-                                    <option value="M" {{ old('jacket_size') === 'M' ? 'selected' : '' }}>
-                                        Medium</option>
-                                    <option value="L" {{ old('jacket_size') === 'L' ? 'selected' : '' }}>
-                                        Large</option>
-                                    <option value="XL" {{ old('jacket_size') === 'XL' ? 'selected' : '' }}>XL
-                                    </option>
-                                    <option value="XXL" {{ old('jacket_size') === 'XXL' ? 'selected' : '' }}>
-                                        XXL</option>
-                                </select>
-                                @error('jacket_size')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                          
-                        </div>
-                        <div class="row">
-                            <div class="mb-3 col-md-4">
-                                <label for="cultural_dress_size" class="form-label">Cultural Dress Size  <a class="uk-button uk-text-primary uk-button-link" href="#modal-container-cul" uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" style="width: 20px; height:20px;"></a>
-
-<div id="modal-container-cul" class="uk-modal-container" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-
-        <p>  <x-size.culture-dress-f />
-                                <x-size.culture-dress-m /></p>
-
-    </div>
-</div></label>
-                                <select class="form-select @error('cultural_dress_size') is-invalid @enderror"
-                                    id="cultural_dress_size" name="cultural_dress_size">
-                                    <option value="" disabled {{ old('cultural_dress_size') ? '' : 'selected' }}>
-                                        Select Size</option>
-                                    <option value="S" {{ old('cultural_dress_size') === 'S' ? 'selected' : '' }}>
-                                        Small</option>
-                                    <option value="M" {{ old('cultural_dress_size') === 'M' ? 'selected' : '' }}>
-                                        Medium</option>
-                                    <option value="L" {{ old('cultural_dress_size') === 'L' ? 'selected' : '' }}>
-                                        Large</option>
-                                    <option value="XL" {{ old('cultural_dress_size') === 'XL' ? 'selected' : '' }}>XL
-                                    </option>
-                                    <option value="XXL" {{ old('cultural_dress_size') === 'XXL' ? 'selected' : '' }}>
-                                        XXL</option>
-                                </select>
-                                @error('cultural_dress_size')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                         
-                        </div>
-                        <div class="mb-3">
-                            <label for="weight_kg" class="form-label">Weight (kg)</label>
-                            <input type="number" class="form-control @error('weight_kg') is-invalid @enderror"
-                                id="weight_kg" name="weight_kg" step="0.01" min="0"
-                                value="{{ old('weight_kg') }}">
-                            @error('weight_kg')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        {{-- <div class="mb-3"> --}}
+                        {{--     <label for="hotel_booking_status" class="form-label">Hotel Booking Status</label> --}}
+                        {{--     <select class="form-select @error('hotel_booking_status') is-invalid @enderror" --}}
+                        {{--         id="hotel_booking_status" name="hotel_booking_status"> --}}
+                        {{--         <option value="" disabled {{ old('hotel_booking_status') ? '' : 'selected' }}> --}}
+                        {{--             Select Hotel Status --}}
+                        {{--         </option> --}}
+                        {{--         <option value="Booked" {{ old('hotel_booking_status') === 'Booked' ? 'selected' : '' }}> --}}
+                        {{--             Booked --}}
+                        {{--         </option> --}}
+                        {{--         <option value="Not Booked" --}}
+                        {{--             {{ old('hotel_booking_status') === 'Not Booked' ? 'selected' : '' }}>Not Booked --}}
+                        {{--         </option> --}}
+                        {{--         <option value="Pending" {{ old('hotel_booking_status') === 'Pending' ? 'selected' : '' }}> --}}
+                        {{--             Pending --}}
+                        {{--         </option> --}}
+                        {{--     </select> --}}
+                        {{--     @error('hotel_booking_status') --}}
+                        {{--         <div class="invalid-feedback">{{ $message }}</div> --}}
+                        {{--     @enderror --}}
+                        {{-- </div> --}}
+                        {{-- <div class="row"> --}}
+                        {{--     <div class="mb-3 col-md-4"> --}}
+                        {{--         <label for="tshirt_size" class="form-label">T-Shirt Size <a --}}
+                        {{--                 class="uk-button uk-text-primary uk-button-link" href="#modal-container-t" --}}
+                        {{--                 uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" --}}
+                        {{--                     style="width: 20px; height:20px;"> </a> --}}
+                        {{----}}
+                        {{--             <div id="modal-container-t" class="uk-modal-container" uk-modal> --}}
+                        {{--                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical"> --}}
+                        {{----}}
+                        {{--                     <button class="uk-modal-close-default" type="button" uk-close></button> --}}
+                        {{----}}
+                        {{--                     <p><img src="{{ asset('images/size-chart-image.jpg') }}"> </p> --}}
+                        {{----}}
+                        {{--                 </div> --}}
+                        {{--             </div> --}}
+                        {{--         </label> --}}
+                        {{--         <select class="form-select @error('tshirt_size') is-invalid @enderror" id="tshirt_size" --}}
+                        {{--             name="tshirt_size"> --}}
+                        {{--             <option value="" disabled {{ old('tshirt_size') ? '' : 'selected' }}> --}}
+                        {{--                 Select Size</option> --}}
+                        {{--             <option value="S" {{ old('tshirt_size') === 'S' ? 'selected' : '' }}> --}}
+                        {{--                 Small</option> --}}
+                        {{--             <option value="M" {{ old('tshirt_size') === 'M' ? 'selected' : '' }}> --}}
+                        {{--                 Medium</option> --}}
+                        {{--             <option value="L" {{ old('tshirt_size') === 'L' ? 'selected' : '' }}> --}}
+                        {{--                 Large</option> --}}
+                        {{--             <option value="XL" {{ old('tshirt_size') === 'XL' ? 'selected' : '' }}>XL --}}
+                        {{--             </option> --}}
+                        {{--             <option value="XXL" {{ old('tshirt_size') === 'XXL' ? 'selected' : '' }}> --}}
+                        {{--                 XXL</option> --}}
+                        {{--         </select> --}}
+                        {{--         @error('tshirt_size') --}}
+                        {{--             <div class="invalid-feedback">{{ $message }}</div> --}}
+                        {{--         @enderror --}}
+                        {{--     </div> --}}
+                        {{----}}
+                        {{-- </div> --}}
+                        {{-- <div class="row"> --}}
+                        {{--     <div class="mb-3 col-md-4"> --}}
+                        {{--         <label for="jacket_size" class="form-label">Jacket Size <a --}}
+                        {{--                 class="uk-button uk-text-primary uk-button-link" href="#modal-container" --}}
+                        {{--                 uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" --}}
+                        {{--                     style="width: 20px; height:20px;"></a> --}}
+                        {{----}}
+                        {{--             <div id="modal-container" class="uk-modal-container" uk-modal> --}}
+                        {{--                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical"> --}}
+                        {{----}}
+                        {{--                     <button class="uk-modal-close-default" type="button" uk-close></button> --}}
+                        {{----}}
+                        {{--                     <p><img src="{{ asset('images/jaceket-size-chart-image.jpg') }}"> </p> --}}
+                        {{----}}
+                        {{--                 </div> --}}
+                        {{--             </div> --}}
+                        {{--         </label> --}}
+                        {{--         <select class="form-select @error('jacket_size') is-invalid @enderror" id="jacket_size" --}}
+                        {{--             name="jacket_size"> --}}
+                        {{--             <option value="" disabled {{ old('jacket_size') ? '' : 'selected' }}> --}}
+                        {{--                 Select Size</option> --}}
+                        {{--             <option value="S" {{ old('jacket_size') === 'S' ? 'selected' : '' }}> --}}
+                        {{--                 Small</option> --}}
+                        {{--             <option value="M" {{ old('jacket_size') === 'M' ? 'selected' : '' }}> --}}
+                        {{--                 Medium</option> --}}
+                        {{--             <option value="L" {{ old('jacket_size') === 'L' ? 'selected' : '' }}> --}}
+                        {{--                 Large</option> --}}
+                        {{--             <option value="XL" {{ old('jacket_size') === 'XL' ? 'selected' : '' }}>XL --}}
+                        {{--             </option> --}}
+                        {{--             <option value="XXL" {{ old('jacket_size') === 'XXL' ? 'selected' : '' }}> --}}
+                        {{--                 XXL</option> --}}
+                        {{--         </select> --}}
+                        {{--         @error('jacket_size') --}}
+                        {{--             <div class="invalid-feedback">{{ $message }}</div> --}}
+                        {{--         @enderror --}}
+                        {{--     </div> --}}
+                        {{----}}
+                        {{-- </div> --}}
+                        {{-- <div class="row"> --}}
+                        {{--     <div class="mb-3 col-md-4"> --}}
+                        {{--         <label for="cultural_dress_size" class="form-label">Cultural Dress Size <a --}}
+                        {{--                 class="uk-button uk-text-primary uk-button-link" href="#modal-container-cul" --}}
+                        {{--                 uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" --}}
+                        {{--                     style="width: 20px; height:20px;"></a> --}}
+                        {{----}}
+                        {{--             <div id="modal-container-cul" class="uk-modal-container" uk-modal> --}}
+                        {{--                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical"> --}}
+                        {{----}}
+                        {{--                     <button class="uk-modal-close-default" type="button" uk-close></button> --}}
+                        {{----}}
+                        {{--                     <p> <x-size.culture-dress-f /> --}}
+                        {{--                         <x-size.culture-dress-m /> --}}
+                        {{--                     </p> --}}
+                        {{----}}
+                        {{--                 </div> --}}
+                        {{--             </div> --}}
+                        {{--         </label> --}}
+                        {{--         <select class="form-select @error('cultural_dress_size') is-invalid @enderror" --}}
+                        {{--             id="cultural_dress_size" name="cultural_dress_size"> --}}
+                        {{--             <option value="" disabled {{ old('cultural_dress_size') ? '' : 'selected' }}> --}}
+                        {{--                 Select Size</option> --}}
+                        {{--             <option value="S" {{ old('cultural_dress_size') === 'S' ? 'selected' : '' }}> --}}
+                        {{--                 Small</option> --}}
+                        {{--             <option value="M" {{ old('cultural_dress_size') === 'M' ? 'selected' : '' }}> --}}
+                        {{--                 Medium</option> --}}
+                        {{--             <option value="L" {{ old('cultural_dress_size') === 'L' ? 'selected' : '' }}> --}}
+                        {{--                 Large</option> --}}
+                        {{--             <option value="XL" {{ old('cultural_dress_size') === 'XL' ? 'selected' : '' }}>XL --}}
+                        {{--             </option> --}}
+                        {{--             <option value="XXL" {{ old('cultural_dress_size') === 'XXL' ? 'selected' : '' }}> --}}
+                        {{--                 XXL</option> --}}
+                        {{--         </select> --}}
+                        {{--         @error('cultural_dress_size') --}}
+                        {{--             <div class="invalid-feedback">{{ $message }}</div> --}}
+                        {{--         @enderror --}}
+                        {{--     </div> --}}
+                        {{----}}
+                        {{-- </div> --}}
+                        {{-- <div class="mb-3"> --}}
+                        {{--     <label for="weight_kg" class="form-label">Weight (kg)</label> --}}
+                        {{--     <input type="number" class="form-control @error('weight_kg') is-invalid @enderror" --}}
+                        {{--         id="weight_kg" name="weight_kg" step="0.01" min="0" --}}
+                        {{--         value="{{ old('weight_kg') }}"> --}}
+                        {{--     @error('weight_kg') --}}
+                        {{--         <div class="invalid-feedback">{{ $message }}</div> --}}
+                        {{--     @enderror --}}
+                        {{-- </div> --}}
 
                         <!-- Applicant's Breakfast Choice -->
                         <div class="mb-4">
@@ -367,60 +383,64 @@
                                         <textarea class="form-control" name="companions[][food_allergies]" rows="3"></textarea>
                                         <div class="invalid-feedback"></div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Hotel Booking Status</label>
-                                        <select class="form-select" name="companions[][hotel_booking_status]">
-                                            <option value="" disabled selected>Select Hotel Status</option>
-                                            <option value="Booked">Booked</option>
-                                            <option value="Not Booked">Not Booked</option>
-                                            <option value="Pending">Pending</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label">T-Shirt Size <a class="uk-button uk-text-primary uk-button-link" href="#modal-container-t" uk-toggle><span class="uk-margin-small-right uk-icon" uk-icon="info"> View Details</a></label>
-                                            <select class="form-select" name="companions[][tshirt_size]">
-                                                <option value="" disabled selected>Select Size</option>
-                                                <option value="S">Small</option>
-                                                <option value="M">Medium</option>
-                                                <option value="L">Large</option>
-                                                <option value="XL">XL</option>
-                                                <option value="XXL">XXL</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label">Jacket Size</label>
-                                            <select class="form-select" name="companions[][jacket_size]">
-                                                <option value="" disabled selected>Select Size</option>
-                                                <option value="S">Small</option>
-                                                <option value="M">Medium</option>
-                                                <option value="L">Large</option>
-                                                <option value="XL">XL</option>
-                                                <option value="XXL">XXL</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3 col-md-4">
-                                            <label class="form-label">Cultural Dress Size</label>
-                                            <select class="form-select" name="companions[][cultural_dress_size]">
-                                                <option value="" disabled selected>Select Size</option>
-                                                <option value="S">Small</option>
-                                                <option value="M">Medium</option>
-                                                <option value="L">Large</option>
-                                                <option value="XL">XL</option>
-                                                <option value="XXL">XXL</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Weight (kg)</label>
-                                        <input type="number" class="form-control" name="companions[][weight_kg]"
-                                            step="0.01" min="0">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
+                                    {{-- <div class="mb-3"> --}}
+                                    {{--     <label class="form-label">Hotel Booking Status</label> --}}
+                                    {{--     <select class="form-select" name="companions[][hotel_booking_status]"> --}}
+                                    {{--         <option value="" disabled selected>Select Hotel Status</option> --}}
+                                    {{--         <option value="Booked">Booked</option> --}}
+                                    {{--         <option value="Not Booked">Not Booked</option> --}}
+                                    {{--         <option value="Pending">Pending</option> --}}
+                                    {{--     </select> --}}
+                                    {{--     <div class="invalid-feedback"></div> --}}
+                                    {{-- </div> --}}
+                                    {{-- <div class="row"> --}}
+                                    {{--     <div class="mb-3 col-md-4"> --}}
+                                    {{--         <label class="form-label">T-Shirt Size <a --}}
+                                    {{--                 class="uk-button uk-text-primary uk-button-link" --}}
+                                    {{--                 href="#modal-container-t" uk-toggle><span --}}
+                                    {{--                     class="uk-margin-small-right uk-icon" uk-icon="info"> View --}}
+                                    {{--                     Details</a></label> --}}
+                                    {{--         <select class="form-select" name="companions[][tshirt_size]"> --}}
+                                    {{--             <option value="" disabled selected>Select Size</option> --}}
+                                    {{--             <option value="S">Small</option> --}}
+                                    {{--             <option value="M">Medium</option> --}}
+                                    {{--             <option value="L">Large</option> --}}
+                                    {{--             <option value="XL">XL</option> --}}
+                                    {{--             <option value="XXL">XXL</option> --}}
+                                    {{--         </select> --}}
+                                    {{--         <div class="invalid-feedback"></div> --}}
+                                    {{--     </div> --}}
+                                    {{--     <div class="mb-3 col-md-4"> --}}
+                                    {{--         <label class="form-label">Jacket Size</label> --}}
+                                    {{--         <select class="form-select" name="companions[][jacket_size]"> --}}
+                                    {{--             <option value="" disabled selected>Select Size</option> --}}
+                                    {{--             <option value="S">Small</option> --}}
+                                    {{--             <option value="M">Medium</option> --}}
+                                    {{--             <option value="L">Large</option> --}}
+                                    {{--             <option value="XL">XL</option> --}}
+                                    {{--             <option value="XXL">XXL</option> --}}
+                                    {{--         </select> --}}
+                                    {{--         <div class="invalid-feedback"></div> --}}
+                                    {{--     </div> --}}
+                                    {{--     <div class="mb-3 col-md-4"> --}}
+                                    {{--         <label class="form-label">Cultural Dress Size</label> --}}
+                                    {{--         <select class="form-select" name="companions[][cultural_dress_size]"> --}}
+                                    {{--             <option value="" disabled selected>Select Size</option> --}}
+                                    {{--             <option value="S">Small</option> --}}
+                                    {{--             <option value="M">Medium</option> --}}
+                                    {{--             <option value="L">Large</option> --}}
+                                    {{--             <option value="XL">XL</option> --}}
+                                    {{--             <option value="XXL">XXL</option> --}}
+                                    {{--         </select> --}}
+                                    {{--         <div class="invalid-feedback"></div> --}}
+                                    {{--     </div> --}}
+                                    {{-- </div> --}}
+                                    {{-- <div class="mb-3"> --}}
+                                    {{--     <label class="form-label">Weight (kg)</label> --}}
+                                    {{--     <input type="number" class="form-control" name="companions[][weight_kg]" --}}
+                                    {{--         step="0.01" min="0"> --}}
+                                    {{--     <div class="invalid-feedback"></div> --}}
+                                    {{-- </div> --}}
                                     <div class="mb-3">
                                         <label class="form-label d-block">Everest Champagne Breakfast?</label>
                                         <div class="form-check form-check-inline">
@@ -472,7 +492,7 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="script.js"></script>
+    {{-- <script src="script.js"></script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const BASE_COST_PER_PERSON = 2590;

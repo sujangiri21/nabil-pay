@@ -87,4 +87,19 @@ class RegistrationController extends Controller
 
         return view('registration.show', compact('registration'));
     }
+
+    public function email(Registration $registration)
+    {
+        $registration->load('companions');
+        $status = $registration->payment_status;
+
+        return view('emails.registration_response', compact('registration', 'status'));
+    }
+
+    public function adminEmail(Registration $registration)
+    {
+        $registration->load('companions');
+
+        return view('emails.admin_registration_response', compact('registration'));
+    }
 }

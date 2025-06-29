@@ -15,7 +15,7 @@
         @endphp
 
         <div class="alert {{ $alertClass }} text-center">
-            <h3>{{ $icon }} Payment {{ ucfirst($status) }}</h3>
+            <h3>{{ $icon }} Payment {{ ucfirst($status) }}</h3> <!-- The Payment status can be among ['approved', 'canceled', 'declined', 'other'] -->
             <p><strong>{{ $registration->registration_number }}</strong></p>
         </div>
 

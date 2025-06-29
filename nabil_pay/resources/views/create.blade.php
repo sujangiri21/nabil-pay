@@ -5,9 +5,13 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
                 <div class="p-4 bg-white shadow-sm"
-                    style=" border-radius: 20px !important; box-shadow: 0px 0px 8px 0px #a3a0a0 !important; ">
+                    style="
+    border-radius: 20px !important;
+    box-shadow: 0px 0px 8px 0px #a3a0a0 !important;
+">
                     <h1
-                        style=" border-radius: 5px; background: #cd3363;padding: 10px 41px;margin-bottom: -7px;color: #fff;line-height: 1.2; ">
+                        style=" border-radius: 5px; background: #cd3363;padding: 10px 41px;margin-bottom: -7px;color: #fff;line-height: 1.2;
+    ">
                         Payment</h1>
                     <form class="pk-form" style="padding: 40px 45px;" id="registration-form"
                         action="{{ route('registration.store') }}" method="post" enctype="multipart/form-data">
@@ -62,7 +66,7 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="flight_arrival_date" class="form-label">Flight Arrival Date</label>
-                                <input type="text" readonly
+                                <input type="text"
                                     class="date-picker form-control @error('flight_arrival_date') is-invalid @enderror"
                                     id="flight_arrival_date" name="flight_arrival_date"
                                     value="{{ old('flight_arrival_date') ? \Carbon\Carbon::parse(old('flight_arrival_date'))->format('Y-m-d\TH:i') : '' }}">
@@ -72,7 +76,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="flight_departure_date" class="form-label">Flight Departure Date</label>
-                                <input type="text" readonly
+                                <input type="text"
                                     class="date-picker form-control @error('flight_departure_date') is-invalid @enderror"
                                     id="flight_departure_date" name="flight_departure_date"
                                     value="{{ old('flight_departure_date') ? \Carbon\Carbon::parse(old('flight_departure_date'))->format('Y-m-d\TH:i') : '' }}">
@@ -81,6 +85,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="flight_airline" class="form-label">Flight Airline</label>
@@ -153,14 +158,14 @@
                         {{--                 class="uk-button uk-text-primary uk-button-link" href="#modal-container-t" --}}
                         {{--                 uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" --}}
                         {{--                     style="width: 20px; height:20px;"> </a> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--             <div id="modal-container-t" class="uk-modal-container" uk-modal> --}}
                         {{--                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical"> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                     <button class="uk-modal-close-default" type="button" uk-close></button> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                     <p><img src="{{ asset('images/size-chart-image.jpg') }}"> </p> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                 </div> --}}
                         {{--             </div> --}}
                         {{--         </label> --}}
@@ -183,7 +188,7 @@
                         {{--             <div class="invalid-feedback">{{ $message }}</div> --}}
                         {{--         @enderror --}}
                         {{--     </div> --}}
-                        {{-- --}}
+                        {{----}}
                         {{-- </div> --}}
                         {{-- <div class="row"> --}}
                         {{--     <div class="mb-3 col-md-4"> --}}
@@ -191,14 +196,14 @@
                         {{--                 class="uk-button uk-text-primary uk-button-link" href="#modal-container" --}}
                         {{--                 uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" --}}
                         {{--                     style="width: 20px; height:20px;"></a> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--             <div id="modal-container" class="uk-modal-container" uk-modal> --}}
                         {{--                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical"> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                     <button class="uk-modal-close-default" type="button" uk-close></button> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                     <p><img src="{{ asset('images/jaceket-size-chart-image.jpg') }}"> </p> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                 </div> --}}
                         {{--             </div> --}}
                         {{--         </label> --}}
@@ -221,7 +226,7 @@
                         {{--             <div class="invalid-feedback">{{ $message }}</div> --}}
                         {{--         @enderror --}}
                         {{--     </div> --}}
-                        {{-- --}}
+                        {{----}}
                         {{-- </div> --}}
                         {{-- <div class="row"> --}}
                         {{--     <div class="mb-3 col-md-4"> --}}
@@ -229,16 +234,16 @@
                         {{--                 class="uk-button uk-text-primary uk-button-link" href="#modal-container-cul" --}}
                         {{--                 uk-toggle> &nbsp;<img src="{{ asset('images/info-icon-3-02.svg') }}" --}}
                         {{--                     style="width: 20px; height:20px;"></a> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--             <div id="modal-container-cul" class="uk-modal-container" uk-modal> --}}
                         {{--                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical"> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                     <button class="uk-modal-close-default" type="button" uk-close></button> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                     <p> <x-size.culture-dress-f /> --}}
                         {{--                         <x-size.culture-dress-m /> --}}
                         {{--                     </p> --}}
-                        {{-- --}}
+                        {{----}}
                         {{--                 </div> --}}
                         {{--             </div> --}}
                         {{--         </label> --}}
@@ -261,7 +266,7 @@
                         {{--             <div class="invalid-feedback">{{ $message }}</div> --}}
                         {{--         @enderror --}}
                         {{--     </div> --}}
-                        {{-- --}}
+                        {{----}}
                         {{-- </div> --}}
                         {{-- <div class="mb-3"> --}}
                         {{--     <label for="weight_kg" class="form-label">Weight (kg)</label> --}}
@@ -491,23 +496,13 @@
     {{-- <script src="script.js"></script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            $('.date-picker').daterangepicker({
+                    $('.date-picker').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
-                autoApply: true,
-                autoUpdateInput: false,
+                autoApply : true,
                 locale: {
                     format: 'YYYY-MM-DD'
                 },
-            });
-
-            $('.date-picker').on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('YYYY-MM-DD'));
-            });
-
-            // Optional: clear value on cancel (if you add a clear button)
-            $('.date-picker').on('cancel.daterangepicker', function(ev, picker) {
-                $(this).val('');
             });
 
             const BASE_COST_PER_PERSON = 2590;
